@@ -90,6 +90,21 @@
     
     </div>
 
+    <?php  
+        if(isset($_POST['add'])){
+            $str = $_FILES['upload1']['name'];
+            $product = createproduct($_POST['pro_name'],$_POST['pro_quantity'],$_POST['category'],$_POST['price'],$_POST['provider'],$str);
+            insertIntoProduct($product->getName(),$product->getQuantity(),$product->getCategory(),$product->getStatus(),$product->getDate(),
+            $product->getPrice(),$product->getProvider(),$product->getImage());
+            $array = selectProducts("SELECT * FROM products");
+        }
+
+        if(isset($_POST['remove'])){
+            $array=selectProducts();
+            deleteProduct(3);
+            $array = selectProducts("SELECT * FROM products");
+        }
+        ?>
 
 
     <div class="row">
@@ -108,8 +123,8 @@
                 </tr>
             <tbody>
             <?php  
-                $array = selectProducts();
-                
+                $array = array();
+                $array = selectProducts("SELECT * FROM products");
                 foreach($array as $k=>$v){
                     ?>
                         <tr style="margin-left:50px">
@@ -122,8 +137,8 @@
                         <td style="width: 80px"><?php  echo $v['price']  ?></td>
                         <td style="width: 130px"><?php  echo $v['id_provider']  ?></td>
                         <td style="width: 120px"><img src="<?php  echo $v['image']?>" alt="anh" width="100px" heigth="100px"></td>
-                        <td> <a href="edit_product.php?idProduct=<?php echo $value['id']; ?>">Chỉnh sữa</a> 
-                            | <a href="index.php?idProduct=<?php echo $value['id']; ?>">Xóa</a> </td><tr>
+                        <td> <a href="edit_product.php?idProduct=<?php echo $value['id_product']; ?>">Chỉnh sữa</a> 
+                            | <a href="index.php?idProduct=<?php echo $value['id_product']; ?>">Xóa</a> </td><tr>
                     <?php
                 }
             ?>
@@ -131,22 +146,7 @@
         </table>
     </div>
 
-        <?php  
-        if(isset($_POST['add'])){
-            $str = $_FILES['upload1']['name'];
-            $product = createproduct($_POST['pro_name'],$_POST['pro_quantity'],$_POST['category'],$_POST['price'],$_POST['provider'],$str);
-            insertIntoProduct($product->getName(),$product->getQuantity(),$product->getCategory(),$product->getStatus(),$product->getDate(),
-            $product->getPrice(),$product->getProvider(),$product->getImage());
-            $array = selectProducts();
-        }
-
-        if(isset($_POST['remove'])){
-            $array=selectProducts();
-            deleteProduct(3);
-            $array = selectProducts();
-        }
-        ?>
-
+        
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <h3> Danh Mục Sản Phẩm</h3>
     </div>

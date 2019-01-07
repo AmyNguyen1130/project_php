@@ -125,6 +125,17 @@
         return $array;
     }
 
+    function queryReturnArray($sql){
+        global $mysqli;
+                $array = array();
+                $result = $mysqli ->query($sql);
+                if($result){
+                    while($temp=mysqli_fetch_assoc($result)){
+                        array_push($array,$temp);
+                    }
+                }
+        return $array;
+    }
 
     function updateProduct($id,$name,$quantity,$category,$status,$date,$price,$provider,$image){
         global $mysqli;
