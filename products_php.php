@@ -48,8 +48,6 @@
     function getImage(){
         return $this->image;
     }
-
-
     }
 
     function checknull_String($input){
@@ -98,14 +96,11 @@
         $sql = "INSERT INTO products (name_product,quantity,id_category,status,date_insert,price,id_provider,image)
         VALUES (?,?,?,?,?,?,?,?)";
         if($stm = $mysqli ->prepare($sql)){
-        $stm -> bind_param("siissiis",$name,$quantity,$category,$status,$date,$price,$provider,$image);
-        $stm->execute();
-        echo "thanh cong insert";
-        }else{
-        echo "that bai".$mysqli->error;
+            $stm -> bind_param("siiisiis",$name,$quantity,$category,$status,$date,$price,$provider,$image);
+            $stm->execute();
+            $mysqli->error;
         }
     }
-
 
     function deleteProduct($input){
         global $mysqli;
@@ -113,7 +108,31 @@
         if($mysqli ->query($sql)){
             echo "xoa thanh cong";
             }else{
-            echo "xoa that baij".$mysqli->error;
+            echo "xoa that bai".$mysqli->error;
+            }
+    }
+    
+    function selectProducts(){
+        global $mysqli;
+                $array = array();
+                $sql = "SELECT * FROM `products`";
+                $result = $mysqli ->query($sql);
+                if($result){
+                    while($temp=mysqli_fetch_assoc($result)){
+                        array_push($array,$temp);
+                    }
+                }
+        return $array;
+    }
+
+
+    function updateProduct($id,$name,$quantity,$category,$status,$date,$price,$provider,$image){
+        global $mysqli;
+        $sql = "UPDATE products SET name_product";
+        if($mysqli ->query($sql)){
+            echo "xoa thanh cong";
+            }else{
+            echo "xoa that bai".$mysqli->error;
             }
     }
 ?>

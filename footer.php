@@ -7,9 +7,9 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" href="../CSS/Project_css.css">
-	<link rel="stylesheet" href="../CSS/responsive.css">
-	<link rel="stylesheet" href="../JS/Project-Js.js">
+	<link rel="stylesheet" href="Project_css.css">
+	<link rel="stylesheet" href="responsive.css">
+	<link rel="stylesheet" href="Project-Js.js">
 </head>
 <body>
 
@@ -75,7 +75,7 @@
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 				<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3 footer_logo">
-					<img src="../Images/logo1.jpg" class="footer_logo" alt="Image">
+					<img src="Images/logo1.jpg" class="footer_logo" alt="Image">
 				</div>
 
 				<div class="col-xs-8 col-sm-8 col-md-9 col-lg-9">
@@ -89,13 +89,13 @@
 					</div>
 					<div class="row">
 						<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-							<a href="#"><img src="../Images/32.png" class="footer_icon1" alt="Can't show" width="30%" height="25%"></a>
+							<a href="#"><img src="Images/32.png" class="footer_icon1" alt="Can't show" width="30%" height="25%"></a>
 						</div>
 						<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-							<a href="#"><img src="../Images/33.png" class="footer_icon2" alt="Can't show" width="28%" height="23%"></a>
+							<a href="#"><img src="Images/33.png" class="footer_icon2" alt="Can't show" width="28%" height="23%"></a>
 						</div>
 						<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-							<a href="#"><img src="../Images/34.png" class="footer_icon3" alt="Can't show" width="26%" height="21%"></a>
+							<a href="#"><img src="Images/34.png" class="footer_icon3" alt="Can't show" width="26%" height="21%"></a>
 						</div>
 					</div>
 					<h5>Developer:</h5>
