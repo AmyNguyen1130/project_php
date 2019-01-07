@@ -1,0 +1,255 @@
+
+    @media only screen and (max-width:600px){
+        .content1::before, .content1::after{
+            clear: both;
+        }
+        .content1{
+            padding: 0% 0px 5px 5px;
+        }
+        .icon{
+            display: none;
+        }
+        .footer_icon1{
+            width: 150%;
+            height: 100%;
+        }
+        .footer_icon2{
+            width: 145%;
+            height: 100%;
+        }
+        .footer_icon3{
+            width: 142%;
+            height: 97%;
+        }
+        .footer_logo{
+            width: 70%;
+            height: 88%;
+            
+        }
+        .logo{
+            width: 350%;
+            height: 200%;
+            margin-left: 230%;
+        }
+        .menu-psive1{
+            display: none;
+        }
+        .menu{
+            width: 100%;
+            width: 400px;
+        }
+        .menu-sub{
+            display: none;
+        }
+        .sub{
+            display: none;
+        }
+        .search{
+            display: block;
+        }
+        .search-758px{
+            display: none;
+        }
+    }
+
+    @media only screen and (min-width:600px){
+        .icon{
+            display: none;
+        }
+        .search{
+            display: none;
+        }
+        /* .img2, .img3{
+            display:none;
+        } */
+        .menu-psive1{
+            display: none;
+        }
+        .content1{
+            padding: 0% 0px 5px 5px;
+        }
+        .footer_logo{
+            width: 70%;
+            height: 88%;
+            
+        }
+        .footer_icon1{
+            width: 70%;
+            height: 68%;
+        }
+        .footer_icon2{
+            width: 68%;
+            height: 62%;
+        }
+        .footer_icon3{
+            width: 66%;
+            height: 60%;
+        }
+        .col-xs-9 {
+            width: 75%;
+            margin-top: 8%;
+            margin-left: 30%;
+        }
+        .menu{
+            width: 100%;
+            width: 500px;
+        }
+        .menu-sub{
+            display: none;
+        }
+        .sub{
+            display: none;
+        }
+        .logo{
+            width: 250%;
+            height: 180%;
+            
+        }
+        
+    }
+
+@media only screen and (min-width:768px){
+    .content1::before, .content1::after{
+        clear: both;
+    }
+    .menu-psive1{
+        display: none;
+    }
+    .menu-psive{
+        display: block;
+    }
+    .content1{
+        max-width: 100%;
+        padding: 0% 0px 5px 5px;
+    }
+   
+    .img2, .img3{
+        display:block;
+    }
+    .img4{
+        display:none;
+    }
+    .logo{
+        width: 120%;
+        height: 250%;
+    }
+    .col-xs-9 {
+        display: block;
+        width: 70%;
+        height: 20;
+        margin-top: 4%;
+        height: 20px;
+        margin-left: 20px;
+    }
+    .footer_icon1{
+        width: 70%;
+        height: 68%;
+    }
+    .footer_icon2{
+        width: 68%;
+        height: 62%;
+    }
+    .footer_icon3{
+        width: 66%;
+        height: 60%;
+    }
+    .icon{
+        display: block;
+        margin-top: 40%;
+        font-size: 100%;
+        width: 50%;
+    }
+    .col-md-3 {
+        width: 25%;
+        margin-top: 4%;
+    }
+    .menu{
+        width: auto;
+    }
+    
+
+}
+@media only screen and (min-width:1215px){
+
+    .content1::before, .content1::after{
+        clear: both;
+    }
+
+    .content1{
+        max-width: 100%;
+        padding: 0% 0px 5px 5px;
+    }
+    
+    .img4{
+        display: block;
+    }
+    .icon{
+        margin-top: 10px;
+        font-size: 120%;
+    }
+    .footer_icon1{
+        width: 40%;
+        height: 35%;
+    }
+    .footer_icon2{
+        width: 38%;
+        height: 36%;
+    }
+    .footer_icon3{
+        width: 36%;
+        height: 34%;
+    }
+    .logo{
+        width: 130%;
+        height: 300%;
+    }
+    .col-xs-9 {
+        display: block;
+        width: 65%;
+        height: 20;
+        margin-top: 1%;
+        height: 20px;
+        margin-left: 7%;
+    }
+    .icon{
+        display: block;
+        margin-top: 40%;
+        font-size: 120%;
+        width: 50%;
+    }
+    .col-md-3 {
+        width: 25%;
+        margin-top: 0%;
+    }
+    .menu-sub1{
+        display: none;
+    }
+    .sub{
+        display: block;
+    }
+    .menu-sub li{
+        width: 50%;
+    }
+    .anhmenu{
+        width: 200px;
+        height: 130px;
+        margin: 1px;
+    }
+    .menu{
+        width: auto;
+    }
+    .menu-psive{
+        display: none;
+    }
+    .navbar {
+        position: relative;
+        min-height: 50px;
+        margin-top: 5%;
+        margin-left: 7%;
+        border: 1px solid transparent;
+    }
+    .menu-psive1{
+        display: block;
+    }
+
+}

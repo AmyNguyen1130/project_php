@@ -1,0 +1,39 @@
+.infomation{
+    text-align: center;
+}
+
+.text{
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
+}
+@media only screen and (max-width:600px){
+    .more1, .more2, .more3{
+        display: none;
+    }
+    
+}
+
+@media only screen and (min-width:600px){
+    .more1, .more2, .more3{
+        display: none;
+        width: 50%;
+        height: 180px;
+    }
+}
+
+@media only screen and (min-width:768px){
+    .more1, .more2, .more3{
+        display: block;
+        width: 32%;
+        height: 180px;
+    }
+}
+
+
+@media only screen and (min-width:1000px){
+    .more1, .more2, .more3{
+        display: block;
+        width: 32%;
+        height: 180px;
+    }
+}
