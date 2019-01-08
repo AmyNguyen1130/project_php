@@ -78,6 +78,37 @@
         return $result;
     }
 
+    function queryReturnArray($sql){
+        global $mysqli;
+                $array = array();
+                $result = $mysqli ->query($sql);
+                if($result){
+                    while($temp=mysqli_fetch_assoc($result)){
+                        array_push($array,$temp);
+                    }
+                }
+        return $array;
+    }
+
+    function Run($sql){
+        global $mysqli;
+                $result = $mysqli ->query($sql);
+                if(!$result){
+                    echo $mysqli->error;    
+                }
+ 
+    }
+
+    function deleteProduct($input){
+        global $mysqli;
+        $sql = "DELETE FROM products WHERE id_product = $input";
+        if($mysqli ->query($sql)){
+            echo "xoa thanh cong";
+            }else{
+            echo "xoa that bai".$mysqli->error;
+            }
+    }
+
     function createproduct($name,$quantity,$category,$price,$provider,$image){
         $product;
         if(checknull_String($name)==1 && checknull_Number($quantity)==1 
@@ -93,6 +124,9 @@
 
     function insertIntoProduct($name,$quantity,$category,$status,$date,$price,$provider,$image){
         global $mysqli;
+        if(checknull_String($name)==1 && checknull_Number($quantity)==1 
+        && isset($category) && isset($status) && checknull_Number($price)==1 && isset($provider) &&
+        isset($image) && isset($date)){
         $sql = "INSERT INTO products (name_product,quantity,id_category,status,date_insert,price,id_provider,image)
         VALUES (?,?,?,?,?,?,?,?)";
         if($stm = $mysqli ->prepare($sql)){
@@ -100,50 +134,27 @@
             $stm->execute();
             $mysqli->error;
         }
-    }
-
-    function deleteProduct($input){
-        global $mysqli;
-        $sql = "DELETE FROM products WHERE id_product = $input";
-        if($mysqli ->query($sql)){
-            echo "xoa thanh cong";
-            }else{
-            echo "xoa that bai".$mysqli->error;
-            }
-    }
-    
-    function selectProducts(){
-        global $mysqli;
-                $array = array();
-                $sql = "SELECT * FROM `products`";
-                $result = $mysqli ->query($sql);
-                if($result){
-                    while($temp=mysqli_fetch_assoc($result)){
-                        array_push($array,$temp);
-                    }
-                }
-        return $array;
-    }
-
-    function queryReturnArray($sql){
-        global $mysqli;
-                $array = array();
-                $result = $mysqli ->query($sql);
-                if($result){
-                    while($temp=mysqli_fetch_assoc($result)){
-                        array_push($array,$temp);
-                    }
-                }
-        return $array;
+        }
     }
 
     function updateProduct($id,$name,$quantity,$category,$status,$date,$price,$provider,$image){
         global $mysqli;
-        $sql = "UPDATE products SET name_product";
-        if($mysqli ->query($sql)){
-            echo "xoa thanh cong";
-            }else{
-            echo "xoa that bai".$mysqli->error;
-            }
+        // if(checknull_String($name) == 1 && checknull_Number($quantity) == 1 && isset($id) && isset($category) && 
+        // isset($status) && checknull_Number($price) == 1 && isset($provider) && isset($image) && isset($date)){
+        $sql="UPDATE `products` SET `name_product` ='$name' , `quantity` = '$quantity' , `id_category` = '$category' , `status` ='$status',
+         `date_insert` ='$date' , `price` = '$price' , `id_provider` = '$provider' , `image`='$image' WHERE `id_product` = '$id'";
+            if($mysqli ->query($sql)){
+                echo " thanh cong". $mysqli->error;
+                }else{
+                echo $mysqli->error;
+                }
+        // }else{
+        //     echo "nhap chua dung";
+        // }
+
     }
+
+    
+
+    
 ?>

@@ -2,6 +2,8 @@
     session_start();
     // include("header.php");
     include("products_php.php");
+    $array = array();
+    $arrCategory = array();
 ?>
 
 <!DOCTYPE html>
@@ -21,15 +23,19 @@
     html{
         scroll-behavior: smooth;
     }
-    .scroll{
-        scroll-behavior: smooth;
-        height: 200px;
-    }
+    
+    .table-wrapper-scroll-y {
+        display: block;
+        max-height: 300px;
+        overflow-y: auto;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+        padding-left : 50px;
+}
     </style>
 </head>
 <body>
 
-<form action="sanpham.php" method="post" enctype = "multipart/form-data">
+<form action="" method="post" enctype = "multipart/form-data">
 <div class="row" style="margin :auto; margin-top:180px; background:pink;">
     <h3 style="">SẢN PHẨM</h3>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -37,44 +43,31 @@
             
             <table>
                 <tbody>
-                    <tr>
-                        <td>Tên Sản Phẩm :</td>
-                        <td> <input type="text" name="pro_name" placeholder="tên sản phẩm"style="width:500px; margin:10px"></td>
-                    </tr>
-
-                    <tr>
-                        <td>Số Lượng :</td>
-                        <td> <input type="text" name="pro_quantity" placeholder="số lượng"style="width:500px; margin:10px"></td>
-                    </tr>
-
-                    <tr>
-                        <td>Loại Sản Phẩm :</td>
+                    <tr><td>Tên Sản Phẩm :</td>
+                        <td> <input type="text" name="pro_name" placeholder="tên sản phẩm"style="width:500px; margin:10px"></td> </tr>
+                    
+                    <tr><td>Số Lượng :</td>
+                        <td> <input type="text" name="pro_quantity" placeholder="số lượng"style="width:500px; margin:10px"></td></tr>
+                    
+                    <tr><td>Loại Sản Phẩm :</td>
                         <td><select name="category"style="width:500px; margin:10px">
                             <option value="1">1</option>
                             <option value="3">2</option>
                             <option value="1">3</option>
-                            </select></td>
-                    </tr>
-
-                    <tr>
-                    <tr>
-                        <td>Giá Sản Phẩm :</td>
-                        <td> <input type="text" name="price" placeholder="giá sản phẩm"style="width:500px; margin:10px"></td>
-                    </tr>
-
-                    <tr>
-                        <td>Nhà Cung Cấp Sản Phẩm :</td>
+                            </select></td></tr><tr>
+                   
+                    <tr><td>Giá Sản Phẩm :</td>
+                        <td> <input type="text" name="price" placeholder="giá sản phẩm"style="width:500px; margin:10px"></td></tr>
+                    
+                    <tr><td>Nhà Cung Cấp Sản Phẩm :</td>
                         <td><select name="provider"style="width:500px; margin:10px">
                             <option value="1">1</option>
                             <option value="3">2</option>
                             <option value="1">3</option>
-                            </select></td>
-                    </tr>
-                    <tr>
-                        <td>Chọn Ảnh Cho Sản Phẩm :</td>
-                        <td style="width:500px; margin:10px"><input type="file" name="upload1" style="width:75px;"></td>
-                    </tr>
-                    
+                            </select></td></tr>
+                    <tr><td>Chọn Ảnh Cho Sản Phẩm :</td>
+                        <td style="width:500px; margin:10px"><input type="file" name="upload1" style="width:75px;"></td></tr>
+
                 </tbody>
             </table>
         </div>
@@ -82,9 +75,7 @@
         <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">  
         </div>
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-        <button name="add">Thêm Sản Phẩm</button>
-        <button name="remove">Xóa Sản Phẩm</button>
-        <button name="update">Sửa Sản Phẩm</button>
+        <button name="add" claa="btn btn-lg-primary">Thêm Sản Phẩm</button>
         <br/><br/>  
         </div>
     
@@ -92,11 +83,12 @@
 
     <?php  
         if(isset($_POST['add'])){
+
             $str = $_FILES['upload1']['name'];
             $product = createproduct($_POST['pro_name'],$_POST['pro_quantity'],$_POST['category'],$_POST['price'],$_POST['provider'],$str);
             insertIntoProduct($product->getName(),$product->getQuantity(),$product->getCategory(),$product->getStatus(),$product->getDate(),
             $product->getPrice(),$product->getProvider(),$product->getImage());
-            $array = selectProducts("SELECT * FROM products");
+            $array = queryReturnArray("SELECT * FROM products");
         }
 
         if(isset($_POST['remove'])){
@@ -104,41 +96,55 @@
             deleteProduct(3);
             $array = selectProducts("SELECT * FROM products");
         }
+
+        if (isset($_GET['idProduct']))
+	    {
+            $idProduct = $_GET['idProduct'];
+            deleteProduct($idProduct);
+            $sql = "select * from products";
+            $array = queryReturnArray("SELECT * FROM products");
+   
+
+        }
         ?>
 
 
-    <div class="row">
-        <table class="table table-striped table-hover scroll" style="margin-left:50px">
+    <div class="row ">
+        <table class="table table-striped table-hover table table-bordered table-striped" style="margin-left:50px" >
                 <tr>
-                    <th style="width: 60px">Mã</th>
+                    <th style="width: 50px">Mã</th>
                     <th style="width: 80px">Tên</th>
-                    <th style="width: 50px">Loại</th>
-                    <th style="width: 90px">Tình Trạng</th>
-                    <th style="width: 90px">Số Lượng</th>
-                    <th style="width: 150px">Ngày Nhập</th>
-                    <th style="width: 80px">Giá</th>
-                    <th style="width: 130px">Nhà Cung Cấp</th>
-                    <th style="width: 120px">Ảnh</th>
-                    <th style="width: 120px">Tùy Chỉnh</th>
+                    <th  style="width: 40px">Loại</th>
+                    <th  style="width: 70px">Tình Trạng</th>
+                    <th style="width: 70px">Số Lượng</th>
+                    <th  style="width: 100px">Ngày Nhập</th>
+                    <th  style="width: 80px">Giá</th>
+                    <th  style="width: 130px">Nhà Cung Cấp</th>
+                    <th  style="width: 120px">Ảnh</th>
+                    <th  style="width: 120px">Tùy Chỉnh</th>
                 </tr>
+            </table>
+        </div>
+    
+    <div class="row table-wrapper-scroll-y">
+        <table style="margin-left:20px">
             <tbody>
             <?php  
-                $array = array();
-                $array = selectProducts("SELECT * FROM products");
+                $array = queryReturnArray("SELECT * FROM products");
                 foreach($array as $k=>$v){
                     ?>
                         <tr style="margin-left:50px">
                         <td style="width: 60px"><?php  echo $v['id_product']  ?></td>
                         <td style="width: 80px"><?php  echo $v['name_product']  ?></td>
-                        <td style="width: 50px"><?php  echo $v['id_category']  ?></td>
-                        <td style="width: 90px"><?php  echo $v['status']  ?></td>
+                        <td style="width: 40px"><?php  echo $v['id_category']  ?></td>
+                        <td style="width: 70px"><?php  echo $v['status']  ?></td>
                         <td style="width: 90px"><?php  echo $v['quantity']  ?></td>
                         <td style="width: 150px"><?php  echo $v['date_insert']  ?></td>
-                        <td style="width: 80px"><?php  echo $v['price']  ?></td>
-                        <td style="width: 130px"><?php  echo $v['id_provider']  ?></td>
-                        <td style="width: 120px"><img src="<?php  echo $v['image']?>" alt="anh" width="100px" heigth="100px"></td>
-                        <td> <a href="edit_product.php?idProduct=<?php echo $value['id_product']; ?>">Chỉnh sữa</a> 
-                            | <a href="index.php?idProduct=<?php echo $value['id_product']; ?>">Xóa</a> </td><tr>
+                        <td style="width: 90px"><?php  echo $v['price']  ?></td>
+                        <td style="width: 140px"><?php  echo $v['id_provider']  ?></td>
+                        <td style="width: 150px"><img src="<?php  echo $v['image']?>" alt="anh" width="80px" heigth="80px"></td>
+                        <td> <a href="edit_products.php?idProduct=<?php echo $v['id_product'];?>">Chỉnh sữa</a> 
+                            | <a href="sanpham.php?idProduct=<?php echo $v['id_product']; ?>">Xóa</a> </td><tr>
                     <?php
                 }
             ?>
@@ -182,19 +188,14 @@
                     <th>Danh Mục</th>
                 </tr>
                 <?php  
-                $mysqli;
-                $sql = "SELECT * FROM `categories`";
-                $result = $mysqli ->query($sql);
-                if($result){
-
-                    while($temp = mysqli_fetch_assoc($result)){
+                $arrCategory = queryReturnArray("SELECT * FROM `categories`");
+                foreach($arrCategory as $k=>$v){
                         ?>
                         <tr>
-                            <td style="width: 50px"><?php  echo $temp['id_category']  ?></td>
-                            <td style="width: 150px"><?php  echo $temp['name_category']  ?></td><tr>
+                            <td style="width: 50px"><?php  echo $v['id_category']  ?></td>
+                            <td style="width: 150px"><?php  echo $v['name_category']  ?></td><tr>
                         <?php
-                    }
-                }
+                        }
             ?>
             </table>
         </div>
@@ -202,8 +203,11 @@
 </div>
 </form>
     <?php
-    // if(isset($_POST['addCategory'])){
-    // }
+    if(isset($_POST['addCategory'])){
+        if(checknull_String($_POST['id_category'])==1 && checknull_Number($_POST['newName'])==1){
+            $sql = "INSERT INTO `categories` (`name_category`)"
+        }
+    }
     // if(isset($_POST['removeCategory'])){
     // }
     // if(isset($_POST['updateCategory']))
