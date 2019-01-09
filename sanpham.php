@@ -205,7 +205,7 @@
     <?php
     if(isset($_POST['addCategory'])){
         if(checknull_String($_POST['id_category'])==1 && checknull_Number($_POST['newName'])==1){
-            $sql = "INSERT INTO `categories` (`name_category`)"
+            $sql = "INSERT INTO `categories` (`name_category`)";
         }
     }
     // if(isset($_POST['removeCategory'])){

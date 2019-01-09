@@ -90,7 +90,7 @@
         return $array;
     }
 
-    function Run($sql){
+    function run($sql){
         global $mysqli;
                 $result = $mysqli ->query($sql);
                 if(!$result){
