@@ -1,7 +1,8 @@
 <?php
     session_start();
-    // include("header.php");
+  
     include("products_php.php");
+    include("functions.php");
     $array = array();
     $arrCategory = array();
 ?>
@@ -26,7 +27,7 @@
     
     .table-wrapper-scroll-y {
         display: block;
-        max-height: 300px;
+        max-height: 500px;
         overflow-y: auto;
         -ms-overflow-style: -ms-autohiding-scrollbar;
         padding-left : 50px;
@@ -34,7 +35,14 @@
     </style>
 </head>
 <body>
-
+    <script>
+        function checkDelete(input){
+            if (confirm('Are you sure you want to save this thing into the database?')== true) {
+                window.location.href= 'sanpham.php?idProduct='+ input+'';
+                return true;
+            } 
+        }
+    </script>
 <form action="" method="post" enctype = "multipart/form-data">
 <div class="row" style="margin :auto; margin-top:180px; background:pink;">
     <h3 style="">SẢN PHẨM</h3>
@@ -75,7 +83,7 @@
         <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">  
         </div>
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-        <button name="add" claa="btn btn-lg-primary">Thêm Sản Phẩm</button>
+        <button name="add" class="btn btn-lg-primary">Thêm Sản Phẩm</button>
         <br/><br/>  
         </div>
     
@@ -91,12 +99,6 @@
             $array = queryReturnArray("SELECT * FROM products");
         }
 
-        if(isset($_POST['remove'])){
-            $array=selectProducts();
-            deleteProduct(3);
-            $array = selectProducts("SELECT * FROM products");
-        }
-
         if (isset($_GET['idProduct']))
 	    {
             $idProduct = $_GET['idProduct'];
@@ -106,6 +108,10 @@
    
 
         }
+
+        
+
+        
         ?>
 
 
@@ -142,9 +148,18 @@
                         <td style="width: 150px"><?php  echo $v['date_insert']  ?></td>
                         <td style="width: 90px"><?php  echo $v['price']  ?></td>
                         <td style="width: 140px"><?php  echo $v['id_provider']  ?></td>
-                        <td style="width: 150px"><img src="<?php  echo $v['image']?>" alt="anh" width="80px" heigth="80px"></td>
+                        <td style="width: 150px"><img src="<?php 
+                            if( $v['id_category']==1){
+                                echo "Images/KinhNam/".$v['image'];
+                            }else if( $v['id_category']==2){
+                                echo "Images/KinhNu/".$v['image'];
+                            }else if($v['id_category']==3){
+                                echo "Images/KinhTreEm/".$v['image'];
+                            }else{
+                                echo "Images/lens/".$v['image'];
+                            }?>" alt="anh" width="80px" heigth="80px"></td>
                         <td> <a href="edit_products.php?idProduct=<?php echo $v['id_product'];?>">Chỉnh sữa</a> 
-                            | <a href="sanpham.php?idProduct=<?php echo $v['id_product']; ?>">Xóa</a> </td><tr>
+                            | <a href="#" onclick="checkDelete(<?php echo $v['id_product']; ?>)">Xóa</a> </td><tr>
                     <?php
                 }
             ?>
@@ -152,65 +167,16 @@
         </table>
     </div>
 
-        
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <h3> Danh Mục Sản Phẩm</h3>
-    </div>
-    
-    <div class="row" style="padding-left : 50px;background:pink">
-        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-        <h4>Thêm Danh Mục Sản Phẩm</h4>
-            <table>
-                <tr>
-                    <td>Mã Loại: </td>
-                    <td><input type="text" name="id_category"></td>
-                </tr> 
-                <tr>
-                    <td>Tên Loại: </td>
-                    <td><input type="text" name="newName"></td>
-                </tr> 
-            </table>
-            
-        </div>
-        
-        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-        <br/>
-        <br/><button name="removeCategory">Xóa Loại Sản Phẩm</button> <br/>
-        <br/><button name="updateCategory">Sửa Loại Sản Phẩm</button> <br/>
-        <br/><button name="addCategory">Thêm Loại Sản Phẩm</button>   <br/>
-        </div>
-        
-        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-            <h4>Tất Cả Các Danh Mục Sản Phẩm</h4>
-            <table>
-                <tr>
-                    <th>Mã</th>
-                    <th>Danh Mục</th>
-                </tr>
-                <?php  
-                $arrCategory = queryReturnArray("SELECT * FROM `categories`");
-                foreach($arrCategory as $k=>$v){
-                        ?>
-                        <tr>
-                            <td style="width: 50px"><?php  echo $v['id_category']  ?></td>
-                            <td style="width: 150px"><?php  echo $v['name_category']  ?></td><tr>
-                        <?php
-                        }
-            ?>
-            </table>
-        </div>
-    </div>
 </div>
 </form>
     <?php
-    if(isset($_POST['addCategory'])){
-        if(checknull_String($_POST['id_category'])==1 && checknull_Number($_POST['newName'])==1){
-            $sql = "INSERT INTO `categories` (`name_category`)";
-        }
-    }
+    
+
+   
     // if(isset($_POST['removeCategory'])){
     // }
     // if(isset($_POST['updateCategory']))
+    include("header.php");
     include("footer.php");
 ?>
 

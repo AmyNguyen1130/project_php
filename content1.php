@@ -1,7 +1,57 @@
 <?php  
 session_start();
-// include("header.php");
+
 include("products_php.php");
+include("functions.php");
+$id = 0;
+if(isset($_GET['idcate'])){
+	$id = $_GET['idcate'];
+}
+
+function displayProduct($input,$category){
+	$array = array();
+	$count = 0;
+	$array = queryReturnArray("SELECT * FROM products WHERE id_category = ".$input);
+	foreach($array as $k=>$v){
+		$count = $count + 1;
+		if($v['status']==0){
+			$pri = $v['price']*(20/100);
+		?>
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
+			<div class="hovereffect  img<?php echo $count;?>">
+				<a href=""><img src="Images/<?php  echo $category."/".$v['image'];?>" alt="<?php  echo $v['image'];?>" class="anhcontent img-responsive "></a>
+				<div class="overlay">
+				<a class="info" href="Chitiet.php?idProduct=<?php echo $v['id_product'];?>" target="Blank"><?php echo $v['name_product']  ?></a>
+				</div>
+			</div>
+			<div class = "img<?php echo $count;?>">
+			<span style="color:red"><?php echo $pri."vnd- <strike>".$v['price']."vnd</strike>";?></span><br/>
+				<a href="Chitiet.php?idProduct=<?php echo $v['id_product'];?>"  ><button type="button" style="background: red" class="btn btn-lg-danger">Xem Chi Tiết</button></a>
+			</div>
+		</div>
+
+
+	<?php
+		}else{
+			?>
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
+			<div class="hovereffect  img<?php echo $count;?>">
+			<a href=""><img src="Images/<?php  echo $category."/".$v['image'];?>" alt="<?php  echo $v['image'];?>" class="anhcontent img-responsive "></a>
+				<div class="overlay">
+				<a class="info" href="Chitiet.php?idProduct=<?php echo $v['id_product'];?>" target="Blank"><?php echo $v['name_product']  ?></a>
+				</div>
+			</div>
+			<div class = "img<?php echo $count;?>">
+			<span style="color:red"><?php echo $v['price']."vnd";?></span><br/>
+				<a href="Chitiet.php?idProduct=<?php echo $v['id_product'];?>"><button type="button" style="background: red" class="btn btn-lg-danger">Xem Chi Tiết</button></a>
+			</div>
+		</div>
+
+
+		<?php
+		}
+	}
+}
 ?>
 <!DOCTYPE html>
 <html lang="">
@@ -18,109 +68,38 @@ include("products_php.php");
 </head>
 
 <body>
-<div class="row" style="margin:3px 3px 3px 3px " >
+<div class="row" style="margin:3px 3px 3px 3px ; margin-top: 200px" >
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-	
-</div>
-
-<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-
-
-		<h4>Kính Nam
-			<a href="#" style="float: right; font-size: 15px;">Tất cả</a>
-		</h4>
 			<div class="row">
-				<?php  
-					$array = array();
-					$count = 0;
-					$array = queryReturnArray("SELECT * FROM products WHERE id_category = 1");
-					foreach($array as $k=>$v){
-						$count = $count + 1;
-						if($v['status']==0){
-							$pri = $v['price']*(20/100);
-						?>
-						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
-							<div class="hovereffect  img<?php echo $count;?>">
-								<a href=""><img src="Images/kinhNam/<?php  echo $v['image'];?>" alt="Can't Show" class="anhcontent img-responsive "></a>
-								<div class="overlay">
-									<a class="info" href="sanpham.php" target="Blank"><?php echo $v['name_product']  ?></a>
-								</div>
-							</div>
-							<div class = "img<?php echo $count;?>">
-								<a href="#"><?php echo $pri."vnd- <strike>".$v['price']."vnd</strike>";?></a>
-							</div>
-						</div>
-					<?php
-						}else{
-							?>
-								<div class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
-								<div class="hovereffect  img<?php echo $count;?>">
-									<a href=""><img src="Images/kinhNam/<?php  echo $v['image'];?>" alt="Can't Show" class="anhcontent img-responsive "></a>
-									<div class="overlay">
-										<a class="info" href="sanpham.php" target="Blank"><?php echo $v['name_product']  ?></a>
-									</div>
-								</div>
-								<div class = "img<?php echo $count;?>">
-									<a href="#"><?php echo $v['price']."vnd";?></a>
-								</div>
-							</div>
-
-						<?php
-						}
-					}
+			<?php 
+			if($id == 1){
 				?>
-			</div>
-
-
-		<h4>Kính Nữ
-			<a href="#" style="float: right; font-size: 15px;">Tất cả</a>
-		</h4>
-		<div class="row">
-				<?php  
-					$array2 = array();
-					$count2 = 0;
-					$array2 = queryReturnArray("SELECT * FROM products WHERE id_category = 2");
-					foreach($array2 as $k=>$v){
-						$count2 = $count2 + 1;
-						if($v['status']==0){
-							$pri = $v['price']*(20/100);
-						?>
-						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
-							<div class="hovereffect  img<?php echo $count2;?>">
-								<a href=""><img src="Images/kinhNu/<?php  echo $v['image'];?>" alt="Can't Show" class="anhcontent img-responsive "></a>
-								<div class="overlay">
-									<a class="info" href="sanpham.php" target="Blank"><?php echo $v['name_product']  ?></a>
-								</div>
-							</div>
-							<div class = "img<?php echo $count;?>">
-								<a href="#"><?php echo $pri."vnd- <strike>".$v['price']."vnd</strike>";?></a>
-							</div>
-						</div>
-					<?php
-						}else{
-							?>
-								<div class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
-								<div class="hovereffect  img<?php echo $count2;?>">
-									<a href=""><img src="Images/kinhNu/<?php  echo $v['image'];?>" alt="Can't Show" class="anhcontent img-responsive "></a>
-									<div class="overlay">
-										<a class="info" href="sanpham.php" target="Blank"><?php echo $v['name_product']  ?></a>
-									</div>
-								</div>
-								<div class = "img<?php echo $count;?>">
-									<a href="#"><?php echo $v['price']."vnd";?></a>
-								</div>
-							</div>
-
-						<?php
-						}
-					}
+				<h2>Kính Nam</h2>
+				<?php
+				displayProduct($id,"KinhNam");
+			}else if($id == 2){
 				?>
+				<h2>Kính Nữ</h2>
+				<?php
+				displayProduct($id,"KinhNu");
+			}else if($id == 3){
+				?>
+				<h2>Kính Trẻ Em</h2>
+				<?php
+				displayProduct($id,"KinhTreEm");
+			}else{
+				?>
+				<h2>Lens</h2>
+				<?php
+				displayProduct($id,"lens");
+			}
+			?>
 			</div>
-
-</div>
-</div>
+		</div>
+		</div>
 
 
         </body>
-        </html>
+		</html>
+		<?php  include("header.php");include("footer.php"); ?>
