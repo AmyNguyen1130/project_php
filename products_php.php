@@ -13,6 +13,7 @@
         protected $id_provider ;
         protected $image ;
 
+        
     function __construct($name,$quantity,$category,$status,$date,$price,$provider,$image){
         $this->name_product = $name;
         $this->quantity = $quantity;
@@ -49,56 +50,7 @@
         return $this->image;
     }
     }
-
-    function checknull_String($input){
-        $result;
-        if(isset($input)){
-            if(is_numeric($input)){
-                $result = 0;
-            }else{
-                $result = 1;
-            }
-        }else{
-            $result = 0;
-        }
-        return $result;
-    }
-
-    function checknull_Number($input){
-        $result;
-        if(isset($input)){
-            if(!is_numeric($input)){
-                $result = 0;
-            }else{
-                $result = 1;
-            }
-        }else{
-            $result = 0;
-        }
-        return $result;
-    }
-
-    function queryReturnArray($sql){
-        global $mysqli;
-                $array = array();
-                $result = $mysqli ->query($sql);
-                if($result){
-                    while($temp=mysqli_fetch_assoc($result)){
-                        array_push($array,$temp);
-                    }
-                }
-        return $array;
-    }
-
-    function run($sql){
-        global $mysqli;
-                $result = $mysqli ->query($sql);
-                if(!$result){
-                    echo $mysqli->error;    
-                }
- 
-    }
-
+    
     function deleteProduct($input){
         global $mysqli;
         $sql = "DELETE FROM products WHERE id_product = $input";

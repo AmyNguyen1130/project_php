@@ -1,3 +1,13 @@
+<?php
+	include("connect.php");
+	include_once("functions.php");
+	include("users_php.php");
+	$user = new users();
+	$er="";
+	$countUser = 0;
+	$countPass = 0 ;
+	$nameDXerr= $passDX = "";
+?>
 <!DOCTYPE html>
 <html lang="">
 
@@ -25,7 +35,7 @@
 					<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
 						<div class="search-758px">
 							<div class="input-group">
-								<input type="text" class="form-control " placeholder="Search" />
+								<input type="text" class="form-control " placeholder="Search"/>
 								<span class="input-group-btn">
 									<button class="btn btn-info " type="button">
 										<i class="glyphicon glyphicon-search"></i>
@@ -47,7 +57,7 @@
 							<a href="#" class="glyphicon glyphicon-user icon" data-toggle="modal" data-target="#myModal1"></a>
 						</div>
 						<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-							<a href="#" class="glyphicon glyphicon-shopping-cart icon"></a>
+							<a href="giohang.php" class="glyphicon glyphicon-shopping-cart icon"></a>
 						</div>
 					</div>
 
@@ -75,30 +85,27 @@
 										</li>
 									</ul>
 									<ul class="nav navbar-nav  menu">
-										<li><a href="#" style="width: auto">Trang Chủ</a>
+										<li><a href="Trangchu.php" style="width: auto">Trang Chủ</a>
 										</li>
 									</ul>
-
+										<?php  $arrCategory = queryReturnArray("SELECT * FROM `categories`");
+											foreach($arrCategory as $k=>$v){
+												?>
+												<ul class="nav navbar-nav  menubar">
+												<li class="menu"><a href="content1.php?idcate=<?php echo $v['id_category']; ?>"><?php echo $v['name_category']; ?></a></li>
+												</ul>
+											<?php
+											}
+										?>
+									
 									<ul class="nav navbar-nav  menubar">
-										<li class="menu"><a href="../HTML/Project.php">Kính Nam</a></li>
+										<li class="menu"><a href="404notfound.php">Đo Khúc Xạ</a></li>
 									</ul>
 									<ul class="nav navbar-nav  menubar">
-										<li class="menu"><a href="#">Kính Nữ</a></li>
+										<li class="menu"><a href="404notfound.php">Hệ Thống Cửa Hàng</a></li>
 									</ul>
 									<ul class="nav navbar-nav  menubar">
-										<li class="menu"><a href="#">Kính Trẻ Em</a></li>
-									</ul>
-                                    <ul class="nav navbar-nav t menubar">
-										<li class="menu"><a href="#">Lens</a></li>
-									</ul>
-									<ul class="nav navbar-nav  menubar">
-										<li class="menu"><a href="#">Đo Khúc Xạ</a></li>
-									</ul>
-									<ul class="nav navbar-nav  menubar">
-										<li class="menu"><a href="Dac_San.php">Hệ Thống Cửa Hàng</a></li>
-									</ul>
-									<ul class="nav navbar-nav  menubar">
-										<li class="menu"><a href="#">Liên Hệ</a></li>
+										<li class="menu"><a href="404notfound.php">Liên Hệ</a></li>
 									</ul>
 									<!-- </div> -->
 								</div><!-- /.navbar-collapse -->
@@ -130,7 +137,7 @@
 								<a href="#" class="glyphicon glyphicon-user"></a>
 							</button>
 							<button type="button" class="navbar-toggle  but" data-toggle="collapse">
-								<a href="#" class="glyphicon glyphicon-shopping-cart"></a>
+								<a href="giohang.php" class="glyphicon glyphicon-shopping-cart"></a>
 							</button>
 						</div>
 
@@ -151,7 +158,7 @@
 								</li>
 							</ul>
 									<ul class="nav navbar-nav  menubar">
-										<li class="menu"><a href="../HTML/Project.php">Kính Nam</a></li>
+										<li class="menu"><a href="">Kính Nam</a></li>
 									</ul>
 									<ul class="nav navbar-nav  menubar">
 										<li class="menu"><a href="#">Kính Nữ</a></li>
@@ -163,13 +170,13 @@
 										<li class="menu"><a href="#">Lens</a></li>
 									</ul>
 									<ul class="nav navbar-nav  menubar">
-										<li class="menu"><a href="#">Đo Khúc Xạ</a></li>
+										<li class="menu"><a href="404notfound.php">Đo Khúc Xạ</a></li>
 									</ul>
 									<ul class="nav navbar-nav  menubar">
-										<li class="menu"><a href="Dac_San.php">Hệ Thống Cửa Hàng</a></li>
+										<li class="menu"><a href="404notfound.php">Hệ Thống Cửa Hàng</a></li>
 									</ul>
 									<ul class="nav navbar-nav  menubar">
-										<li class="menu"><a href="#">Liên Hệ</a></li>
+										<li class="menu"><a href="404notfound.php">Liên Hệ</a></li>
 									</ul>
 							<!-- </div> -->
 
@@ -196,8 +203,10 @@
 									<td colspan="2"> <img src="Images/logo1.jpg" alt="Image" style="width: 88%; height: 70%;margin-left: 7%; "></td>
 								</tr>
 								</table>
-								<input type="text" class="form-control input-lg" name="userName" placeholder="Your UserName"/><br/>
-								<input type="password" class="form-control input-lg" name="password" placeholder="Your Password"/><br/>
+								<input type="text" class="form-control input-lg" name="userNameLogin" placeholder="Your UserName"/><br/>
+								<span value="<?php echo $nameDXerr; ?>"></span>
+								<input type="password" class="form-control input-lg" name="passwordLogin" placeholder="Your Password"/><br/>
+								<span value="<?php echo $passDX; ?>"></span>
 							<button name="Login" class="btn btn-outline-primary" style="border: green 1px solid; background-color: rgb(175, 238, 214)">Đăng Nhập</button>
 						</center>
 							<p>bằng việc tiếp tục bạn đồng ý với điều khoản của chúng tôi</p>
@@ -239,7 +248,7 @@
 								</select>
 								<br/>
 								
-							<button name="register" class="btn btn-outline-primary" style="border: green 1px solid; background-color: rgb(175, 238, 214)">Đăng Kí</button>
+							<button name="register" class="btn btn-lg-primary" style="border: green 1px solid; background-color: rgb(175, 238, 214)">Đăng Kí</button>
 						</center>
 							<p>bằng việc tiếp tục bạn đồng ý với điều khoản của chúng tôi</p>
 						</div>
@@ -252,5 +261,74 @@
 			</div>
 		</div>
 		</form>
+<!-- 		
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:500px;">
+			<?php  echo $er; ?>
+		</div> -->
+		
     </body>
     </html>
+	<?php
+
+	function  hash_pass($password){
+		$pass = password_hash("$password",PASSWORD_DEFAULT);
+		return $pass;
+	}
+
+	function check_PassAndUsername($name,$password){
+		global $mysqli;
+		global $countUser;
+		global $countPass;
+		$sql = "SELECT * FROM users";
+		$result = $mysqli ->query($sql);
+		if($result){
+			while($temp = mysqli_fetch_assoc($result)){
+				if($name == $temp['name_cus']){
+					$countUser = 1;
+				   if(password_verify($password,$temp['pass'])){
+					$countPass = 1;
+				   }else{
+				   }
+				}
+			}
+		}
+		
+	}
+
+	if(isset($_POST['register'])){
+		$er = hash_pass($_POST['password']);
+		$user->insertUser($_POST['userName'],$_POST['userAddress'],$_POST['userPhone'],hash_pass($_POST['password']),$_POST['userEmail'],$_POST['role']);
+	}
+
+	if(isset($_POST['Login'])){
+		if(checknull_String($_POST['userNameLogin'])!=1){
+			$nameDXerr = "tên user là chữ";
+		}else{
+			if(count($_POST['passwordLogin'])<=8){
+				$passDX = "mật khẩu phải có ít nhất 8 kí tự";
+			}
+			else{
+				check_PassAndUsername($_POST['userNameLogin'],$_POST['passwordLogin']);
+					if($countUser==1 && $countPass ==1){
+						echo '<script language="javascript">';
+						echo 'alert(Đăng kí thành công)';  
+						echo '</script>';
+						exit;
+						$_SESSION['name'] = $_POST['userNameLogin'];
+						$_SESSION['pass'] = $_POST['passwordLogin'];
+					}else if ($countUser==1 && $countPass!=1){
+						echo '<script language="javascript">';
+						echo 'alert(Mật khẩu của bạn chưa đúng)';  
+						echo '</script>';
+						exit;
+				}else{
+					echo '<script language="javascript">';
+					echo 'alert(Đăng kí không thành công)';  
+					echo '</script>';
+					exit;
+				}
+			}
+		}
+		
+	}
+	?>

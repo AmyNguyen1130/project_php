@@ -19,9 +19,7 @@
 
 				<div class="col-xs-5 col-sm-4 col-md-4 col-lg-3">
 					<ul class="textstyle justify-content-center">
-						<li>
-							<h4 href="#">Về Chúng Tôi</h4>
-						</li>
+						<li><h4 href="#">Về Chúng Tôi</h4></li>
                         <li><a href="#">Trang Chủ</a></li>
 						<li><a href="#">Hệ Thống Của Hàng</a></li>
 						<li><a href="#">Giới Thiệu Chung</a></li>
@@ -32,7 +30,7 @@
 
 				</div>
 
-				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-4">
+				<div class="col-xs-6 col-sm-6 col-md-5 col-lg-4">
                 <li style="list-style: none; margin-left:25px"><h4 href="#">Danh Mục</h4></li>
 						<ul class="textstyle justify-content-center">
 							<li><a href="#">Kính Mát Ray Ban</a></li>
@@ -46,7 +44,7 @@
 
 				</div>
 
-				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+				<div class="col-xs-4 col-sm-4 col-md-2 col-lg-4">
 					<ul class="textstyle justify-content-center">
 						<li>
 							<h4 href="#">Hỗ Trợ Khách Hàng</h4>

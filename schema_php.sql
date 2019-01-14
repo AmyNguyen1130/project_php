@@ -7,7 +7,7 @@ create table users (
 	name_cus varchar(255),
 	address varchar(255),
 	phone varchar(50),
-	pass varchar(255),
+	pass varchar(1000),
 	email varchar(255),
     user_role varchar (255),
 	primary key (id_cus)
@@ -48,9 +48,17 @@ CREATE TABLE providers (
 CREATE TABLE orders(
     id_order INT,
     id_cus INT NOT NULL,
+    date_ord datetime,
     FOREIGN KEY (id_cus)
         REFERENCES users (id_cus),
     PRIMARY KEY (id_order , id_cus)
+);
+
+CREATE TABLE slides(
+    id_slide INT auto_increment,
+    image mediumblob,
+    event varchar(255),
+    PRIMARY KEY (id_slide)
 );
 
 
@@ -66,6 +74,7 @@ CREATE TABLE orders(
 	);
 
 
+insert into users (name_cus,address,phone,pass,email,user_role) values  ('admin','da nang','0123456789','qwerty','huong.nguyen@admin','admin');
 
 insert into categories (id_category,name_category) values  (1,'Kính Nam');
 insert into categories (id_category,name_category) values  (2,'Kính Nữ');
@@ -77,6 +86,9 @@ insert into providers (name_provider,address,phone_num,email) values  ('Big C','
 insert into providers (name_provider,address,phone_num,email) values  ('Vin Max','sai gon','0123456789','dieu.quach');
 insert into providers (name_provider,address,phone_num,email) values  ('Asian Max','ha noi','0123456789','dieu.quach');
 
+INSERT INTO slides (image,event) VALUES ('8.jpg','tet');
+INSERT INTO slides (image,event) VALUES ('6.jpg','tet');
+INSERT INTO slides (image,event) VALUES ('7.jpg','tet');
 
 INSERT INTO `products` (`id_product`, `name_product`, `quantity`, `id_category`, `status`, `date_insert`, `price`, `id_provider`, `image`) VALUES
 (1, 'TOPMAN', 15, 1, 1, '2019-01-01 00:00:00', 150000, 2, '1.jpg'),
@@ -92,11 +104,11 @@ INSERT INTO `products` (`id_product`, `name_product`, `quantity`, `id_category`,
 (11, 'RAYBAN WAYFARER', 32, 1, 0, '2019-01-01 00:00:00', 4000000, 2, '11.jpg'),
 (12, 'HAVANA GOLD MIRROR ', 2, 1, 1, '2019-01-01 00:00:00', 8000000, 3, '12.jpg'),
 (13, 'LILY MAYMAC', 523, 2, 0, '2019-01-01 00:00:00', 9000000, 2, '13.jpg'),
-(14, 'DOLCE & GABBANA', 25, 2, 1, '2019-01-01 00:00:00', 6000000, 3, '14.jpg'),
+(14, 'DOLCE & GABBANA', 25, 2, 1, '2019-01-01 00:00:00', 6000000, 3, '14.jpeg'),
 (15, 'GUCCI', 2, 2, 0, '2019-01-01 00:00:00', 4000000, 1, '15.jpg'),
 (16, 'DIOR', 5, 2, 1, '2019-01-01 00:00:00', 8800000, 2, '16.jpg'),
 (17, 'PRADA', 6, 2, 0, '2019-01-01 00:00:00', 3000000, 1, '17.jpg'),
-(18, 'FENDI', 8, 2, 1, '2019-01-01 00:00:00', 7000000, 2, '18.jpg'),
+(18, 'FENDI', 8, 2, 1, '2019-01-01 00:00:00', 7000000, 2, '18.jpeg'),
 (19, 'TOM FORD', 9, 2, 0, '2019-01-01 00:00:00', 5500000, 3, '19.jpg'),
 (20, 'THOM BROWNE', 7, 2, 1, '2019-01-01 00:00:00', 900150, 1, '20.jpg'),
 (21, 'RAYBAN', 8, 2, 1, '2019-01-01 00:00:00', 6000000, 2, '21.jpg'),
@@ -115,13 +127,13 @@ INSERT INTO `products` (`id_product`, `name_product`, `quantity`, `id_category`,
 (34, 'KÍNH ÁP TRÒNG SILICONE HYDROGEL TOPAZ CHOCO( HOÀNG NG?C SOCOLA)', 59, 3, 0, '2019-01-01 00:00:00', 300000, 1, '34.jpg'),
 (35, 'KÍNH ÁP TRÒNG SILICONE HYDROGEL SNOWBALL GRAY', 85, 3, 1, '2019-01-01 00:00:00', 400000, 2, '35.jpg'),
 (36, 'KÍNH ÁP TRÒNG SILICONE HYDROGEL OPAL AMBER( M?T MÈO H? PHÁCH)', 96, 3, 0, '2019-01-01 00:00:00', 500000, 3, '36.jpg'),
-(37, 'MẮT KÍNH TRẺ EM GRIL AND BOY', 8, 4, 1, '2019-01-01 00:00:00', 300000, 2, '37.jpg'),
-(38, 'MẮT KÍNH TRẺ EM GATEWAY', 9, 4, 0, '2019-01-01 00:00:00', 400000, 1, '38.jpg'),
-(39, 'MẮT KÍNH TRẺ EM SECG 5007 C1', 8, 4, 1, '2019-01-01 00:00:00', 120000, 2, '39.jpg'),
-(40, 'MẮT KÍNH TRẺ EM V-IDOL', 5, 4, 0, '2019-01-01 00:00:00', 450000, 1, '40.jpg'),
-(41, 'MẮT KÍNH TRẺ EM VELOCITY', 98, 4, 1, '2019-01-01 00:00:00', 320000, 2, '41.jpg'),
-(42, 'MẮT KÍNH TRẺ EM DISNEYFROZEN', 9, 4, 0, '2019-01-01 00:00:00', 420000, 3, '42.jpg'),
-(43, 'MẮT KÍNH TRẺ EM XSPICE', 6, 4, 1, '2019-01-01 00:00:00', 520000, 2, '43.jpg'),
+(37, 'MẮT KÍNH TRẺ EM GRIL AND BOY', 8, 4, 1, '2019-01-01 00:00:00', 300000, 2, '37.png'),
+(38, 'MẮT KÍNH TRẺ EM GATEWAY', 9, 4, 0, '2019-01-01 00:00:00', 400000, 1, '38.png'),
+(39, 'MẮT KÍNH TRẺ EM SECG 5007 C1', 8, 4, 1, '2019-01-01 00:00:00', 120000, 2, '39.png'),
+(40, 'MẮT KÍNH TRẺ EM V-IDOL', 5, 4, 0, '2019-01-01 00:00:00', 450000, 1, '40.png'),
+(41, 'MẮT KÍNH TRẺ EM VELOCITY', 98, 4, 1, '2019-01-01 00:00:00', 320000, 2, '41.png'),
+(42, 'MẮT KÍNH TRẺ EM DISNEYFROZEN', 9, 4, 0, '2019-01-01 00:00:00', 420000, 3, '42.png'),
+(43, 'MẮT KÍNH TRẺ EM XSPICE', 6, 4, 1, '2019-01-01 00:00:00', 520000, 2, '43.png'),
 (44, 'MẮT KÍNH TRẺ EM SUNKID\'D', 9, 4, 0, '2019-01-01 00:00:00', 550000, 1, '44.jpg'),
 (45, 'MẮT KÍNH TRẺ EM H&M', 8, 4, 1, '2019-01-01 00:00:00', 600000, 2, '45.jpg'),
 (46, 'MẮT KÍNH TRẺ EM GYMBORRE', 9, 4, 0, '2019-01-01 00:00:00', 450000, 3, '46.jpg'),
