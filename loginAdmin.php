@@ -1,5 +1,4 @@
 <?php 
-    session_start();
     include("connect.php");
     include("functions.php");
 ?>
@@ -7,7 +6,11 @@
 <html lang="">
 
 <head>
-	<title>header</title>
+	<title><?php if(isset($_SESSION['name'])){
+		echo $_SESSION['name'];
+	}else{
+		echo "kinh mat Dieu Huong";
+	}?></title>
 	<!-- bootstrap CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -53,11 +56,11 @@
                 $sql = "SELECT * FROM `users` where `user_role` = 'admin' and name_cus = '$name' and pass = '$pass';";
                 $result = $mysqli ->query($sql);
                 if(mysqli_num_rows($result)>0){
+                    $_SESSION['name'] = $name;
+					$_SESSION['pass'] = $pass;
                     header('location: admin.php');
                 } else {echo $mysqli-> error;}
-                
             }
-            
         }
         ?>              
 </body>

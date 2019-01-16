@@ -30,7 +30,13 @@ $arrCategory = array();
     <link rel="stylesheet" href="Project_css.css">
 	<link rel="stylesheet" href="responsive.css">
 	<link rel="stylesheet" href="Project-Js.js">
-    <title>Sản Phẩm</title>
+    <title><?php 
+	if(isset($_SESSION['name'])){
+		echo $_SESSION['name'];
+	}else{
+		echo "kinh mat Dieu Huong";
+	}
+	?></title>
     <style>
     html{
         scroll-behavior: smooth;
@@ -75,7 +81,7 @@ $arrCategory = array();
                 </tr>
                 <script>
                     function checkDelete(input){
-                        if (confirm('Are you sure you want to save this thing into the database?')== true) {
+                        if (confirm('Are you sure you want to delete it?')== true) {
                             window.location.href= 'danhmuc.php?id_category='+ input+'';
                             return true;
                         } 

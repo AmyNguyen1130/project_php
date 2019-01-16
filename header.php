@@ -1,18 +1,56 @@
 <?php
+	session_start();
 	include("connect.php");
-	include_once("functions.php");
+	include("functions.php");
 	include("users_php.php");
 	$user = new users();
 	$er="";
-	$countUser = 0;
+	$temp = array();
 	$countPass = 0 ;
-	$nameDXerr= $passDX = "";
+	// $nameDXerr= $passDX = "";
+	function  hash_pass($password){
+		$pass = password_hash("$password",PASSWORD_DEFAULT);
+		return $pass;
+	}
+
+	function check_PassAndUsername($name,$password){
+		global $mysqli;
+		$sql = "SELECT * FROM users";
+		$result = $mysqli ->query($sql);
+		if($result){
+			while($temp = mysqli_fetch_assoc($result)){
+				if($name == $temp['name_cus']){
+				   if(password_verify($password,$temp['pass'])){
+						$_SESSION['name'] = $name;
+						$_SESSION['pass'] = $password;
+				   }
+				}
+			}
+		}
+	}
+
+	if(isset($_POST['register'])){
+		$er = hash_pass($_POST['password']);
+		$user->insertUser($_POST['userName'],$_POST['userAddress'],$_POST['userPhone'],hash_pass($_POST['password']),$_POST['userEmail'],$_POST['role']);
+	}
+
+	if(isset($_POST['Login'])){
+		if(checknull_String($_POST['userNameLogin'])==1){
+			if(count($_POST['passwordLogin']) > 8){
+			}else{
+				check_PassAndUsername($_POST['userNameLogin'],$_POST['passwordLogin']);
+				}
+		}
+	}
+	if(isset($_GET['logout'])){
+		unset($_SESSION['name']);
+	}
 ?>
 <!DOCTYPE html>
 <html lang="">
 
 <head>
-	<title>header</title>
+	<title></title>
 	<!-- bootstrap CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -50,14 +88,35 @@
 						<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
 							<a href="#" class="glyphicon glyphicon-comment icon"></a>
 						</div>
+						<?php 
+							if(!isset($_SESSION['name'])){
+								?>
+								<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+								<a href="#" class="glyphicon glyphicon-log-in icon" data-toggle="modal" data-target="#myModal2"></a>
+								</div>
+								<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+									<a href="#" class="glyphicon glyphicon-user icon" data-toggle="modal" data-target="#myModal1"></a>
+								</div>
+								<?php
+							}else{
+								?>
+								<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+									<a href="header.php?logout=logout"  class="glyphicon glyphicon-log-out icon"></a>
+								</div>
+								<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+									<a href="#" class="glyphicon glyphicon-user icon"></a>
+								</div>
+								<?php
+							}
+						?>
 						<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-							<a href="#" class="glyphicon glyphicon-log-in icon" data-toggle="modal" data-target="#myModal2"></a>
-						</div>
-						<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-							<a href="#" class="glyphicon glyphicon-user icon" data-toggle="modal" data-target="#myModal1"></a>
-						</div>
-						<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-							<a href="giohang.php" class="glyphicon glyphicon-shopping-cart icon"></a>
+							<a href="giohang.php" class="glyphicon glyphicon-shopping-cart icon" ><?php
+							if(isset($_SESSION['soluong'])){
+									echo "(".$_SESSION['soluong'].")";
+							}else{
+								echo "(0)";
+							}
+							?></a>
 						</div>
 					</div>
 
@@ -130,14 +189,32 @@
 							<button type="button" class="navbar-toggle  but" data-toggle="collapse">
 								<a class="glyphicon glyphicon-comment"></a>
 							</button>
+							<?php 
+							if(!isset($_SESSION['name'])){
+								?>
 							<button type="button" class="navbar-toggle  but" data-toggle="collapse">
 								<a href="#" class="glyphicon glyphicon-log-in" data-toggle="modal" data-target="#myModal2"></a>
 							</button>
 							<button type="button" class="navbar-toggle  but" data-toggle="modal" data-target="#myModal1">
 								<a href="#" class="glyphicon glyphicon-user"></a>
 							</button>
+							<?php }else{ ?>
 							<button type="button" class="navbar-toggle  but" data-toggle="collapse">
-								<a href="giohang.php" class="glyphicon glyphicon-shopping-cart"></a>
+								<a href="#" class="glyphicon glyphicon-log-out"></a>
+								<button type="button" class="navbar-toggle  but">
+								<a href="#" class="glyphicon glyphicon-user"></a>
+							</button>
+							</button>
+							<?php  }?>
+							<button type="button" class="navbar-toggle  but" data-toggle="collapse">
+								<a href="giohang.php" class="glyphicon glyphicon-shopping-cart">
+								<?php
+							if(isset($_SESSION['soluong'])){
+									echo "(".$_SESSION['soluong'].")";
+							}else{
+								echo "(0)";
+							}
+							?></a>
 							</button>
 						</div>
 
@@ -260,75 +337,3 @@
 				</div>
 			</div>
 		</div>
-		</form>
-<!-- 		
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:500px;">
-			<?php  echo $er; ?>
-		</div> -->
-		
-    </body>
-    </html>
-	<?php
-
-	function  hash_pass($password){
-		$pass = password_hash("$password",PASSWORD_DEFAULT);
-		return $pass;
-	}
-
-	function check_PassAndUsername($name,$password){
-		global $mysqli;
-		global $countUser;
-		global $countPass;
-		$sql = "SELECT * FROM users";
-		$result = $mysqli ->query($sql);
-		if($result){
-			while($temp = mysqli_fetch_assoc($result)){
-				if($name == $temp['name_cus']){
-					$countUser = 1;
-				   if(password_verify($password,$temp['pass'])){
-					$countPass = 1;
-				   }else{
-				   }
-				}
-			}
-		}
-		
-	}
-
-	if(isset($_POST['register'])){
-		$er = hash_pass($_POST['password']);
-		$user->insertUser($_POST['userName'],$_POST['userAddress'],$_POST['userPhone'],hash_pass($_POST['password']),$_POST['userEmail'],$_POST['role']);
-	}
-
-	if(isset($_POST['Login'])){
-		if(checknull_String($_POST['userNameLogin'])!=1){
-			$nameDXerr = "tên user là chữ";
-		}else{
-			if(count($_POST['passwordLogin'])<=8){
-				$passDX = "mật khẩu phải có ít nhất 8 kí tự";
-			}
-			else{
-				check_PassAndUsername($_POST['userNameLogin'],$_POST['passwordLogin']);
-					if($countUser==1 && $countPass ==1){
-						echo '<script language="javascript">';
-						echo 'alert(Đăng kí thành công)';  
-						echo '</script>';
-						exit;
-						$_SESSION['name'] = $_POST['userNameLogin'];
-						$_SESSION['pass'] = $_POST['passwordLogin'];
-					}else if ($countUser==1 && $countPass!=1){
-						echo '<script language="javascript">';
-						echo 'alert(Mật khẩu của bạn chưa đúng)';  
-						echo '</script>';
-						exit;
-				}else{
-					echo '<script language="javascript">';
-					echo 'alert(Đăng kí không thành công)';  
-					echo '</script>';
-					exit;
-				}
-			}
-		}
-		
-	}
-	?>

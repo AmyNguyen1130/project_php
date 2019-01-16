@@ -1,53 +1,23 @@
 <?php
-    session_start();
-  
+    include("header.php");
     include("products_php.php");
-    include("functions.php");
+    $product = new products();
     $array = array();
     $arrCategory = array();
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="Project_css.css">
-	<link rel="stylesheet" href="responsive.css">
-	<link rel="stylesheet" href="Project-Js.js">
-    <title>Sản Phẩm</title>
-    <style>
-    html{
-        scroll-behavior: smooth;
-    }
-    
-    .table-wrapper-scroll-y {
-        display: block;
-        max-height: 500px;
-        overflow-y: auto;
-        -ms-overflow-style: -ms-autohiding-scrollbar;
-        padding-left : 50px;
-}
-    </style>
-</head>
-<body>
     <script>
         function checkDelete(input){
-            if (confirm('Are you sure you want to save this thing into the database?')== true) {
+            if (confirm('Are you sure you want to delete it?')== true) {
                 window.location.href= 'sanpham.php?idProduct='+ input+'';
                 return true;
             } 
         }
     </script>
 <form action="" method="post" enctype = "multipart/form-data">
-<div class="row" style="margin :auto; margin-top:180px; background:pink;">
+<div class="row" style="margin :auto; margin-top:80px; background:pink;">
     <h3 style="">SẢN PHẨM</h3>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11" style="border: 2px solid black; margin-top:10px;margin:20px; height:500px">
+        <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11" style="border: 2px solid black; margin-top:10px;margin:20px; height:auto">
             
             <table>
                 <tbody>
@@ -76,9 +46,11 @@
                     <tr><td>Chọn Ảnh Cho Sản Phẩm :</td>
                         <td style="width:500px; margin:10px"><input type="file" name="upload1" style="width:75px;"></td></tr>
 
+                    <tr><td>Mô Tả Về Sản Phẩm:</td>
+                        <td> <textarea name="content" cols="30" rows="10"style="width:500px; margin:10px" placeholder="Mô Tả Về Sản Phẩm"></textarea></td></tr>
                 </tbody>
             </table>
-        </div>
+            </div>
         </div>
         <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">  
         </div>
@@ -91,29 +63,46 @@
 
     <?php  
         if(isset($_POST['add'])){
-
             $str = $_FILES['upload1']['name'];
-            $product = createproduct($_POST['pro_name'],$_POST['pro_quantity'],$_POST['category'],$_POST['price'],$_POST['provider'],$str);
-            insertIntoProduct($product->getName(),$product->getQuantity(),$product->getCategory(),$product->getStatus(),$product->getDate(),
-            $product->getPrice(),$product->getProvider(),$product->getImage());
+            $product->insertIntoProduct($_POST['pro_name'],$_POST['pro_quantity'],$_POST['category'],$_POST['price'],$_POST['provider'],$str,$_POST['content']);
             $array = queryReturnArray("SELECT * FROM products");
         }
 
         if (isset($_GET['idProduct']))
 	    {
             $idProduct = $_GET['idProduct'];
-            deleteProduct($idProduct);
-            $sql = "select * from products";
+            $product->deleteProduct($idProduct);
             $array = queryReturnArray("SELECT * FROM products");
-   
-
         }
 
-        
-
-        
+        if(!empty($_POST['search'])){
+            if(isset($_POST['searchContent'])){
+                $search = $_POST['searchContent'];
+                $array = queryReturnArray("SELECT * FROM products WHERE `name_product`like'%$search%' OR `quantity` LIKE '%$search%' OR `id_category` LIKE '%$search%' OR `status` LIKE '%$search%'OR
+                `date_insert` LIKE '%$search%' OR `price` LIKE '%$search%' OR `id_provider` LIKE '%$search%' OR `image`LIKE '%$search%'OR `content` LIKE '%$search%'");
+            }
+        }
         ?>
 
+    
+    <!-- <div class="row" style="margin :auto;background: black;">
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <h1 style="color: white;">Tìm kiếm Sản Phẩm</h1>
+        </div>
+        
+        <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+        <div class="search-758px" style="padding-top:20px">
+                <div>
+                    <input type="text" name="searchContent" placeholder="Search">
+                    <span class="input-group-btn">
+                        <button class="btn btn-info" type="button" name="search">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div> -->
 
     <div class="row ">
         <table class="table table-striped table-hover table table-bordered table-striped" style="margin-left:50px" >
@@ -142,7 +131,7 @@
                         <tr style="margin-left:50px">
                         <td style="width: 60px"><?php  echo $v['id_product']  ?></td>
                         <td style="width: 80px"><?php  echo $v['name_product']  ?></td>
-                        <td style="width: 40px"><?php  echo $v['id_category']  ?></td>
+                        <td style="width: 80px"><?php  echo $v['id_category']  ?></td>
                         <td style="width: 70px"><?php  echo $v['status']  ?></td>
                         <td style="width: 90px"><?php  echo $v['quantity']  ?></td>
                         <td style="width: 150px"><?php  echo $v['date_insert']  ?></td>
@@ -171,14 +160,5 @@
 </form>
     <?php
     
-
-   
-    // if(isset($_POST['removeCategory'])){
-    // }
-    // if(isset($_POST['updateCategory']))
-    include("header.php");
     include("footer.php");
 ?>
-
-</body>
-</html>

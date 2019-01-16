@@ -1,26 +1,16 @@
 <?php
-    session_start();
     include("header.php");
     $total = 0;
+    $count  = 0;
+    $cartquantiy = 0;
+    $pass = $userName = $addUser = $addShip = $phone = $email = "";
 ?>
-<!DOCTYPE html>
-<html lang="">
-
-<head>
-	<title>Giỏ Hàng</title>
-	<!-- bootstrap CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" href="Project_css.css">
-	<link rel="stylesheet" href="responsive.css">
-	<link rel="stylesheet" href="Project-Js.js">
-</head>
 <body>
     <script>
         function checkDelete(input){
-            if (confirm('Are you sure you want to save this thing into the database?')== true) {
-                window.location.href= 'giohang.php?idProduct='+ input+'';
+            if (confirm('Are you sure you want to delete it?')== true) {
+                window.location.href= 'giohang.php?id='+ input+'';
+                //document.write(input);
                 return true;
             } 
         }
@@ -49,16 +39,18 @@
                         $_SESSION['cart'][$k]['quan'] -=1;
                     }
 
-                    if (isset($_GET['idProduct']))
+                    if (isset($_GET['id']))
                     {  
-                        $k = $_GET['idProduct'];
-                        unset($_SESSION['cart'][$k]);
+                        $k = $_GET['id'];
+                        unset($_SESSION['cart']["'".$k."'"]);
                         
                     }
                     
                     
                     foreach(isset($_SESSION['cart']) ? $_SESSION['cart'] : array() as $k=>$v){
                         $total =  $total + $v['total'];
+                        $cartquantiy = $cartquantiy + $v['quan'];
+                       
                         ?>
                         <tr>
                         <td style="width: 150px"><img src="<?php 
@@ -74,7 +66,7 @@
                                ?>"  alt="anh" width="100px" heigth="30px">
                                <?php  echo $v['name'];?>
                                </td>
-                        <td><?php echo $v['price']; ?></td>
+                        <td><?php echo $v['price'];?></td>
                         <td><input type="text" value = "<?php echo $v['quan']; ?>" name="<?php echo $k;?>">
                                 <a href="giohang.php?id1=<?php echo $k;?>"><button type="button" name="up">+</button></a>
                                 <a href="giohang.php?id2=<?php echo $k;?>"><button type="button" name="down">-</button></a>
@@ -90,6 +82,7 @@
         </form>
         <center>
         <div class="row">
+                    <?php  $_SESSION['soluong'] = $cartquantiy;?>
         <h2>Tổng Tiền : <?php echo $total."vnd";?></h2>
         </div>
         </center>
@@ -102,15 +95,16 @@
         </center>
                     
     </div>
-</body>
-</html>
 
+<?php 
+
+?>
 <div id="myModal1" class="modal fade" role="dialog">
 			<div class="modal-dialog">
 				<!-- Modal content-->
 				<div class="modal-content">
 					<div class="modal-header" style="background-color: dimgrey;">
-						<b style="color: rgb(215, 238, 215); font-size: 170%;">Đăng KÍ Thành Viên</b>
+						<b style="color: rgb(215, 238, 215); font-size: 170%;">Điền Thông Tin Đầy Đủ</b>
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 					</div>
 					<div class="modal-body " style="margin-left: 5%; margin-right: 5%">
@@ -122,14 +116,8 @@
 								</table>
 								<input type="email" class="form-control input-lg" name="userEmail" placeholder="Your Email"/><br/>
 								<input type="text" class="form-control input-lg" name="userName" placeholder="Your Name"/><br/>
-								<input type="password" class="form-control input-lg" name="password" placeholder="Your Password"/><br/>
 								<input type="text" class="form-control input-lg" name="userAddress" placeholder="Your Address"/><br/>
 								<input type="text" class="form-control input-lg" name="userPhone" placeholder="Your Phone Numbers"/><br/>
-								<select name="role" class="form-control input-lg">
-									<option value="Admin">Admin</option>
-									<option value="User">User</option>
-									<option value="Stocker">Stocker</option>
-								</select>
 								<br/>
 								
 							<button name="register" class="btn btn-lg-primary" style="border: green 1px solid; background-color: rgb(175, 238, 214)">Đăng Kí</button>

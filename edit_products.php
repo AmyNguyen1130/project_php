@@ -2,6 +2,7 @@
     session_start();
     include("header.php");
     include("products_php.php");
+    $product = new products();
 ?>
 
 <!DOCTYPE html>
@@ -16,7 +17,13 @@
     <link rel="stylesheet" href="Project_css.css">
 	<link rel="stylesheet" href="responsive.css">
 	<link rel="stylesheet" href="Project-Js.js">
-    <title>Sản Phẩm</title>
+    <title><?php 
+	if(isset($_SESSION['name'])){
+		echo $_SESSION['name'];
+	}else{
+		echo "kinh mat Dieu Huong";
+	}
+	?></title>
     <style>
     html{
         scroll-behavior: smooth;
@@ -31,7 +38,7 @@
     <body>
         <?php
             $nameErr  = $quanErr = $categoryErr = $dateErr = $priceErr = $statusErr = $providerErr = $imageErr  = "";
-            $nameSp  =  $categorySP = $dateSP =    $image  = "";
+            $nameSp  =  $categorySP = $dateSP =    $image  = $contentSp="";
             $quanSp = $priceSp = $providerSp = $statusSP = 0;
             $err = array();
             $idProduct;
@@ -49,9 +56,9 @@
                     $priceSp= $value['price']; 
                     $quanSp= $value['quantity']; 
                     $providerSp= $value['id_provider']; 
-                    $image= $value['image']; 
+                    $image= $value['image'];
+                    $contentSp = $value['content']; 
                 }
-                
             }
 
 
@@ -63,13 +70,8 @@
                 $quanSp= $_POST['pro_quantity']; 
                 $providerSp= $_POST['provider']; 
                 $image= $_FILES['upload']['name'];
-                updateProduct($idProduct,$nameSp,$quanSp,$categorySP,$statusSP, $dateSP,$priceSp,$providerSp,$image);
-            }
-
-            if(isset($_POST['back'])){
-                header('Location: sanpham.php');
-                $sql = "select * from products";
-                $array = selectProducts($sql);
+                $contentSp = $_POST['content'];
+                $product->updateProduct($idProduct,$nameSp,$quanSp,$categorySP,$statusSP, $dateSP,$priceSp,$providerSp,$image,$contentSp);
             }
         ?>
         <form action="" method="post" role="form" enctype = "multipart/form-data">
@@ -139,13 +141,15 @@
                                     ?>
                                     </select></td>
                             </tr>
+                            <tr><td>Mô Tả Về Sản Phẩm:</td>
+                        <td> <input name="content" style="width:500px; height:50px;margin:10px" value="<?php echo $contentSp;?>"></td></tr>
                         </tbody>
                     </table>
                     <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">  
                         </div>
                     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                     <button name="update">Sửa Sản Phẩm</button>
-                    <button name="back">Trở Về</button>
+                    <a href="sanpham.php"><button type= "button" name="back">Trở Về</button></a>
                     <br/><br/>  
                         </div>
                     </div>

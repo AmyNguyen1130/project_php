@@ -11,11 +11,13 @@
     function queryReturnArray($sql){
         global $mysqli;
                 $array = array();
-                $result = $mysqli ->query($sql);
+                $result = $mysqli->query($sql);
                 if($result){
-                    while($temp=mysqli_fetch_assoc($result)){
+                    while($temp = mysqli_fetch_assoc($result)){
                         array_push($array,$temp);
                     }
+                }else{
+                  echo $mysqli->error; 
                 }
         return $array;
     }

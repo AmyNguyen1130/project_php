@@ -1,29 +1,13 @@
 <?php 
-    session_start();
-    include("connect.php");
-    include("functions.php");
+    include("header.php"); 
     if(isset($_GET['id2'])){
         $id = $_GET['id2'];
         run("DELETE FROM `users` where `id_cus` = $id ");
     }
 
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" href="Project_css.css">
-	<link rel="stylesheet" href="responsive.css">
-	<link rel="stylesheet" href="Project-Js.js">
-    <title>user</title>
-</head>
-<body>
-    
-<div class="row table-wrapper-scroll-y" style="margin-top:200px">
+
+<div class="row table-wrapper-scroll-y" style="margin-top:0px">
     <table class="table table-striped table-hover table table-bordered table-striped" style="margin-left:50px" >
                     <tr>
                         <th style="width: 50px">Mã</th>
@@ -61,6 +45,4 @@
     <div class="row" style="margin-left: 20px">
         <h5>Tổng Số Khách Hàng Đã Đăng Kí Là : <?php echo $Tong;?></h5>
     </div>
-    <?php   include("header.php");  include("footer.php"); ?>
-</body>
-</html>
+    <?php   include("footer.php"); ?>

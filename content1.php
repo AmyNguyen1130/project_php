@@ -1,8 +1,7 @@
 <?php  
-session_start();
-
+include("header.php");
 include("products_php.php");
-include("functions.php");
+include_once("functions.php");
 $id = 0;
 if(isset($_GET['idcate'])){
 	$id = $_GET['idcate'];
@@ -29,8 +28,6 @@ function displayProduct($input,$category){
 				<a href="Chitiet.php?idProduct=<?php echo $v['id_product'];?>"  ><button type="button" style="background: red" class="btn btn-lg-danger">Xem Chi Tiết</button></a>
 			</div>
 		</div>
-
-
 	<?php
 		}else{
 			?>
@@ -46,29 +43,13 @@ function displayProduct($input,$category){
 				<a href="Chitiet.php?idProduct=<?php echo $v['id_product'];?>"><button type="button" style="background: red" class="btn btn-lg-danger">Xem Chi Tiết</button></a>
 			</div>
 		</div>
-
-
 		<?php
 		}
 	}
 }
 ?>
-<!DOCTYPE html>
-<html lang="">
 
-<head>
-	<title>Đi mọi nơi</title>
-	<!-- bootstrap CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" href="Project_css.css">
-	<link rel="stylesheet" href="responsive.css">
-	<link rel="stylesheet" href="Project-Js.js">
-</head>
-
-<body>
-<div class="row" style="margin:3px 3px 3px 3px ; margin-top: 200px" >
+<div class="row" style="margin:3px 3px 3px 3px ; margin-top: 0px" >
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 			<div class="row">
@@ -99,7 +80,4 @@ function displayProduct($input,$category){
 		</div>
 		</div>
 
-
-        </body>
-		</html>
-		<?php  include("header.php");include("footer.php"); ?>
+		<?php include("footer.php"); ?>

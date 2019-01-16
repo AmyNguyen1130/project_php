@@ -1,34 +1,7 @@
 <?php
-    session_start();
+    include("header.php");
     include("products_php.php");
-    include("functions.php");
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="Project_css.css">
-	<link rel="stylesheet" href="responsive.css">
-	<link rel="stylesheet" href="Project-Js.js">
-    <title>Sản Phẩm</title>
-    <style>
-    html{
-        scroll-behavior: smooth;
-        padding-top: 200px;
-    }
-    .scroll{
-        scroll-behavior: smooth;
-        height: 200px;
-    }
-    </style>
-</head>
-    <body>
         <?php
        
             $nameErr  = $quanErr = $categoryErr = $dateErr = $priceErr = $statusErr = $providerErr = $imageErr  = "";
@@ -41,7 +14,7 @@
             if (isset($_GET['idProduct']))
             { 
                 $idProduct = $_GET['idProduct'];
-                $sql = "SELECT * FROM products WHERE id_product  = " . $idProduct;
+                $sql = "SELECT * FROM products WHERE id_product = " . $idProduct;
                 $array = queryReturnArray($sql);
                 foreach ($array as $key => $value) {
                     $nameSp= $value['name_product']; 
@@ -62,22 +35,38 @@
                 }
                 
             function addPro($idProduct,$nameSp,$priceSp,$total,$quan,$image,$categorySP){
-                $newpro = array(
-                    $idProduct=>array(
-                        'name'=>$nameSp,
-                        'price'=>$priceSp,
-                        'quan'=>$quan,
-                        'total'=>$total,
-                        'image'=>$image,
-                        'category'=>$categorySP));
-                $pro = getAllPro();
-                $pro1 = array_merge($pro,$newpro);
-                $_SESSION['cart'] = $pro1;
+                $arr = getAllPro();
+                // session_destroy();
+                $check = 0;
+                echo $idProduct;    
+                foreach($arr as $key=> $value){
+                    if($key == "'".$idProduct."'"){
+                        $_SESSION['cart'][$key]['quan'] = $_SESSION['cart'][$key]['quan'] + 1;
+                        $_SESSION['cart'][$key]['price'] = $_SESSION['cart'][$key]['price'] + 1;
+                        $check = 1;
+                    }   
+                }
+
+                if($check == 0){
+                    $newpro = array(
+                        "'".$idProduct."'"=>array(
+                            'name'=>$nameSp,
+                            'price'=>$priceSp,
+                            'quan'=>$quan,
+                            'total'=>$total,
+                            'image'=>$image,
+                            'category'=>$categorySP));
+                    $pro = getAllPro();
+                    $pro1 = array_merge($pro,$newpro);
+                    $_SESSION['cart'] = $pro1;
+                }
             }
             $quantity = 1;
 
             if(isset($_POST['addtocart'])){
+                $idProduct = $_GET['idProduct'];
                 addPro($idProduct,$nameSp,$priceSp,$priceSp,$quantity,$image,$categorySP);
+                var_dump($_SESSION['cart']);
                 $studentstotal1 = getAllPro();
             }
 
@@ -176,7 +165,5 @@
     
 </form>
 </div>
-      
-    <?php  include("footer.php"); include("header.php"); ?>
-    </body>
-</html>
+<?php  include("footer.php"); ?>
+  

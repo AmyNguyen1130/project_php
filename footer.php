@@ -1,18 +1,3 @@
-<!DOCTYPE html>
-<html lang="">
-
-<head>
-	<title>Footer</title>
-	<!-- bootstrap CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" href="Project_css.css">
-	<link rel="stylesheet" href="responsive.css">
-	<link rel="stylesheet" href="Project-Js.js">
-</head>
-<body>
-
 
 <div class="row " style="border-top: 1px solid black; border-bottom: 1px solid black;">
 			<div style="margin-top: 15px;">
