@@ -1,42 +1,19 @@
 <?php
-    include("header.php");
-    $total = 0;
-    $count  = 0;
-    $cartquantiy = 0;
-    $pass = $userName = $addUser = $addShip = $phone = $email = "";
-?>
-<body>
-    <script>
-        function checkDelete(input){
-            if (confirm('Are you sure you want to delete it?')== true) {
-                window.location.href= 'giohang.php?id='+ input+'';
-                //document.write(input);
-                return true;
-            } 
-        }
-    </script>
-    <div class="row" style="margin-top: 200px"> 
-        <form action="giohang.php" method ="POST">
-            <table class="table table-striped table-hover table table-bordered table-striped" style="margin-left:50px">
-                <tr><th>Sản Phẩm</th>
-                <th>Giá</th>
-                <th>Số Lượng</th>
-                <th>Thành Tiền</th>
-                <th>Xóa</th></tr>
-                <?php
-
-                    if (isset($_GET['id1']))
+require("header.php");
+                    if (isset($_GET['cong']))
                     {  
-                        $k = $_GET['id1'];
-                        $_SESSION['cart'][$k]['total'] = $_SESSION['cart'][$k]['total'] + $_SESSION['cart'][$k]['price'];
-                        $_SESSION['cart'][$k]['quan'] +=1;
+                        $_SESSION['soluong'] +=1;
+                        $cong = $_GET['cong'];
+                        $_SESSION['cart'][$cong]['total'] = $_SESSION['cart'][$cong]['total'] + $_SESSION['cart'][$cong]['price'];
+                        $_SESSION['cart'][$cong]['quan'] +=1;
                     }
 
-                    if (isset($_GET['id2']))
+                    if (isset($_GET['tru']))
                     {  
-                        $k = $_GET['id2'];
-                        $_SESSION['cart'][$k]['total'] = $_SESSION['cart'][$k]['total'] - $_SESSION['cart'][$k]['price'];
-                        $_SESSION['cart'][$k]['quan'] -=1;
+                        $_SESSION['soluong'] -=1;
+                        $tru = $_GET['tru'];
+                        $_SESSION['cart'][$tru]['total'] = $_SESSION['cart'][$tru]['total'] - $_SESSION['cart'][$tru]['price'];
+                        $_SESSION['cart'][$tru]['quan'] -=1;
                     }
 
                     if (isset($_GET['id']))
@@ -45,12 +22,34 @@
                         unset($_SESSION['cart']["'".$k."'"]);
                         
                     }
-                    
+
+    $total = 0;
+    $count  = 0;
+    $pass = $userName = $addUser = $addShip = $phone = $email = "";
+?>
+<body>
+    <script>
+        function checkDelete(input){
+            if (confirm('Are you sure you want to delete it?')== true) {
+                window.location.href= 'giohang.php?id='+input+'';
+                //document.write(input);
+                return true;
+            } 
+        }
+    </script>
+    <div class="row" style="margin-top: 200px"> 
+        <form action="" method ="POST">
+            <table class="table table-striped table-hover table table-bordered table-striped" style="margin-left:50px">
+                <tr><th>Sản Phẩm</th>
+                <th>Giá</th>
+                <th>Số Lượng</th>
+                <th>Thành Tiền</th>
+                <th>Xóa</th></tr>
+                
+                    <?php
                     
                     foreach(isset($_SESSION['cart']) ? $_SESSION['cart'] : array() as $k=>$v){
                         $total =  $total + $v['total'];
-                        $cartquantiy = $cartquantiy + $v['quan'];
-                       
                         ?>
                         <tr>
                         <td style="width: 150px"><img src="<?php 
@@ -68,8 +67,8 @@
                                </td>
                         <td><?php echo $v['price'];?></td>
                         <td><input type="text" value = "<?php echo $v['quan']; ?>" name="<?php echo $k;?>">
-                                <a href="giohang.php?id1=<?php echo $k;?>"><button type="button" name="up">+</button></a>
-                                <a href="giohang.php?id2=<?php echo $k;?>"><button type="button" name="down">-</button></a>
+                                <a href="giohang.php?cong=<?php echo $k;?>"><button type="button" name="up">+</button></a>
+                                <a href="giohang.php?tru=<?php echo $k;?>"><button type="button" name="down">-</button></a>
                     </td>
                         <td><?php echo  $v['total'];?></td>
                         <td><a href="#" onclick="checkDelete(<?php echo $k;?>)">Xóa</a> </td>
@@ -82,7 +81,6 @@
         </form>
         <center>
         <div class="row">
-                    <?php  $_SESSION['soluong'] = $cartquantiy;?>
         <h2>Tổng Tiền : <?php echo $total."vnd";?></h2>
         </div>
         </center>

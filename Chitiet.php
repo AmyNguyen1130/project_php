@@ -1,9 +1,22 @@
 <?php
     include("header.php");
-    include("products_php.php");
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title></title>
+	<!-- bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="Project_css.css">
+	<link rel="stylesheet" href="responsive.css">
+	<link rel="stylesheet" href="Project-Js.js">
+</head>
+<body>
+  
         <?php
-       
+            session_start();
             $nameErr  = $quanErr = $categoryErr = $dateErr = $priceErr = $statusErr = $providerErr = $imageErr  = "";
             $nameSp  =  $categorySP = $dateSP =    $image  = "";
             $quanSp = $priceSp = $providerSp = $statusSP = 0;
@@ -36,13 +49,13 @@
                 
             function addPro($idProduct,$nameSp,$priceSp,$total,$quan,$image,$categorySP){
                 $arr = getAllPro();
-                // session_destroy();
+                //  session_destroy();
                 $check = 0;
                 echo $idProduct;    
                 foreach($arr as $key=> $value){
                     if($key == "'".$idProduct."'"){
                         $_SESSION['cart'][$key]['quan'] = $_SESSION['cart'][$key]['quan'] + 1;
-                        $_SESSION['cart'][$key]['price'] = $_SESSION['cart'][$key]['price'] + 1;
+                        $_SESSION['cart'][$key]['total'] = $_SESSION['cart'][$key]['total'] + $_SESSION['cart'][$key]['price'];
                         $check = 1;
                     }   
                 }
@@ -66,8 +79,8 @@
             if(isset($_POST['addtocart'])){
                 $idProduct = $_GET['idProduct'];
                 addPro($idProduct,$nameSp,$priceSp,$priceSp,$quantity,$image,$categorySP);
-                var_dump($_SESSION['cart']);
-                $studentstotal1 = getAllPro();
+                // $studentstotal1 = getAllPro();
+                $_SESSION['soluong'] +=1;
             }
 
             if(isset($_POST['back'])){
@@ -149,8 +162,8 @@
                                         }
                                         }
                                 ?></td></tr>
-                        <tr><td style="width:400px;"><button  style="background: red" class="btn btn-lg-danger" name="addtocart">Thêm Vào Giỏ Hàng</button>
-                        <button class="btn btn-lg-danger" style="background: red"  name="back" style="margin:5px">Trở Về</button></td></tr>
+                        <tr><td style="width:400px;"><button  type="submit" style="background: red" class="btn btn-lg-danger" name="addtocart">Thêm Vào Giỏ Hàng</button>
+                        <button type = "button" class="btn btn-lg-danger" style="background: red"  name="back" style="margin:5px">Trở Về</button></td></tr>
                     </tbody>
                 </table>
             </div>
@@ -165,5 +178,8 @@
     
 </form>
 </div>
+  
+</body>
+</html>
 <?php  include("footer.php"); ?>
   

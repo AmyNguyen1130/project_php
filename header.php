@@ -1,8 +1,10 @@
 <?php
+
 	session_start();
 	include("connect.php");
 	include("functions.php");
 	include("users_php.php");
+	include("products_php.php");
 	$user = new users();
 	$er="";
 	$temp = array();
@@ -62,7 +64,7 @@
 <body>
     
 <!-- model -->
-<form action="header.php" method="post">
+<form action="" method="post">
 <div style="margin: 3px 3px 0px 3px;" class="container-fluid">
 		<div class="row">
 			<div id="header">

@@ -1,5 +1,5 @@
 <?php  
-include("header.php");
+require("header.php");
 
 function displayProduct($input,$category){
 	$array = array();
@@ -10,7 +10,14 @@ function displayProduct($input,$category){
 		if($v['status']==0){
 			$pri = $v['price']*(20/100);
 		?>
-		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
+		<!-- <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+		<a href="#" class="thumbnail">
+			<img src="Images/KinhNam/1.jpg" alt="dfssssssssss">
+			ftgshtyeutyut
+		</a>
+		</div> -->
+
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 thumbnail" style="height:300px">
 			<div class="hovereffect  img<?php echo $count;?>">
 				<a href=""><img src="Images/<?php  echo $category."/".$v['image'];?>" alt="<?php  echo $v['image'];?>" class="anhcontent img-responsive "></a>
 				<div class="overlay">
@@ -25,7 +32,7 @@ function displayProduct($input,$category){
 	<?php
 		}else{
 			?>
-				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 thumbnail" style="height:300px">
 				<div class="hovereffect  img<?php echo $count;?>">
 				<a href=""><img src="Images/<?php  echo $category."/".$v['image'];?>" alt="<?php  echo $v['image'];?>" class="anhcontent img-responsive "></a>
 					<div class="overlay">
@@ -42,6 +49,21 @@ function displayProduct($input,$category){
 		}
 	}
 }
+
+
+// table thumbnail
+?>
+	<!-- <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+		<a href="#" class="thumbnail">
+			<img src="Images/KinhNam/1.jpg" alt="dfssssssssss">
+			ftgshtyeutyut
+		</a>
+	</div> -->
+
+
+<?php
+
+//
 ?> 
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:0px">
     <div class="container">
@@ -125,4 +147,9 @@ function displayProduct($input,$category){
 		</div>
 </div>
 </div>
-	<?php  include("footer.php");?>
+
+<div class="row" style = "margin-top:50px;">
+<?php  include("footer.php");?>
+</div>
+
+	
