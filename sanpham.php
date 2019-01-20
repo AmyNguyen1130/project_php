@@ -1,6 +1,6 @@
 <?php
+    require("index.php");
     include("header.php");
-    include("products_php.php");
     $product = new products();
     $array = array();
     $arrCategory = array();
@@ -137,16 +137,7 @@
                         <td style="width: 150px"><?php  echo $v['date_insert']  ?></td>
                         <td style="width: 90px"><?php  echo $v['price']  ?></td>
                         <td style="width: 140px"><?php  echo $v['id_provider']  ?></td>
-                        <td style="width: 150px"><img src="<?php 
-                            if( $v['id_category']==1){
-                                echo "Images/KinhNam/".$v['image'];
-                            }else if( $v['id_category']==2){
-                                echo "Images/KinhNu/".$v['image'];
-                            }else if($v['id_category']==3){
-                                echo "Images/KinhTreEm/".$v['image'];
-                            }else{
-                                echo "Images/lens/".$v['image'];
-                            }?>" alt="anh" width="80px" heigth="80px"></td>
+                        <td style="width: 150px"><img src="<?php echo "Images/".$v['image'];?>" alt="anh" width="80px" heigth="80px"></td>
                         <td> <a href="edit_products.php?idProduct=<?php echo $v['id_product'];?>">Chỉnh sữa</a> 
                             | <a href="#" onclick="checkDelete(<?php echo $v['id_product']; ?>)">Xóa</a> </td><tr>
                     <?php

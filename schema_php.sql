@@ -15,7 +15,7 @@ create table users (
 
 CREATE TABLE categories(
     id_category INT AUTO_INCREMENT,
-    nameusers_category VARCHAR(255),
+    name_category VARCHAR(255),
     PRIMARY KEY (id_category)
 );
 
@@ -46,15 +46,18 @@ CREATE TABLE providers (
 	primary key (id_product)
 	);
 
+
 CREATE TABLE orders(
-    id_order INT,
+    id_order INT auto_increment,
     id_cus INT NOT NULL,
     address varchar(5000),
+    phone varchar(225),
     date_ord datetime,
     FOREIGN KEY (id_cus)
         REFERENCES users (id_cus),
     PRIMARY KEY (id_order , id_cus)
 );
+
 
 CREATE TABLE slides(
     id_slide INT auto_increment,
@@ -62,7 +65,6 @@ CREATE TABLE slides(
     event varchar(255),
     PRIMARY KEY (id_slide)
 );
-
 
 	create table order_prod(
 	id_order int not null,
@@ -72,9 +74,63 @@ CREATE TABLE slides(
 	foreign key (id_product)
 	references products (id_product),
 	quantity int not null,
+    status int,
 	primary key (id_order,id_product)
 	);
 
+create table `view`(
+id_product int,
+view int,
+foreign key (id_product)
+references products (id_product)
+);
+
+insert into `view`(id_product,view) values (
+(1,0),
+(2,0),
+(3,0),
+(4,0),
+(5,0),
+(6,0),
+(7,0),
+(8,0),
+(9,0),
+(10,0),
+(11,0),
+(12,0),
+(13,0),
+(14,0),
+(15,0),
+(16,0),
+(17,0),
+(18,0),
+(19,0),
+(20,0),
+(21,0),
+(23,0),
+(23,0),
+(24,0),
+(25,0),
+(26,0),
+(27,0),
+(28,0),
+(29,0),
+(30,0),
+(31,0),
+(32,0),
+(33,0),
+(34,0),
+(35,0),
+(36,0),
+(37,0),
+(38,0),
+(39,0),
+(40,0),
+(41,0),
+(42,0),
+(43,0),
+(44,0)
+);
 
 insert into users (name_cus,address,phone,pass,email,user_role) values  ('admin','da nang','0123456789','qwerty','huong.nguyen@admin','admin');
 
