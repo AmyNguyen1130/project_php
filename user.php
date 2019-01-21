@@ -1,4 +1,5 @@
 <?php 
+require("index.php");
     include("header.php"); 
     if(isset($_GET['id2'])){
         $id = $_GET['id2'];

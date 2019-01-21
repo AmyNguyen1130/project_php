@@ -1,24 +1,24 @@
-<?php  
+<?php 
+require("index.php");
 include("header.php");
-include("products_php.php");
-include_once("functions.php");
+
 $id = 0;
 if(isset($_GET['idcate'])){
 	$id = $_GET['idcate'];
 }
 
-function displayProduct($input,$category){
+function displayProduct($sql){
 	$array = array();
 	$count = 0;
-	$array = queryReturnArray("SELECT * FROM products WHERE id_category = ".$input);
+	$array = queryReturnArray($sql);
 	foreach($array as $k=>$v){
 		$count = $count + 1;
 		if($v['status']==0){
 			$pri = $v['price']*(20/100);
 		?>
-		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 thumbnail" style="height:300px;margin:40px;">
 			<div class="hovereffect  img<?php echo $count;?>">
-				<a href=""><img src="Images/<?php  echo $category."/".$v['image'];?>" alt="<?php  echo $v['image'];?>" class="anhcontent img-responsive "></a>
+				<a href=""><img src="Images/<?php  echo $v['image'];?>" alt="<?php  echo $v['image'];?>" class="anhcontent img-responsive "></a>
 				<div class="overlay">
 				<a class="info" href="Chitiet.php?idProduct=<?php echo $v['id_product'];?>" target="Blank"><?php echo $v['name_product']  ?></a>
 				</div>
@@ -31,9 +31,9 @@ function displayProduct($input,$category){
 	<?php
 		}else{
 			?>
-		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 thumbnail" style="height:300px;margin:40px;">
 			<div class="hovereffect  img<?php echo $count;?>">
-			<a href=""><img src="Images/<?php  echo $category."/".$v['image'];?>" alt="<?php  echo $v['image'];?>" class="anhcontent img-responsive "></a>
+			<a href=""><img src="Images/<?php  echo $v['image'];?>" alt="<?php  echo $v['image'];?>" class="anhcontent img-responsive "></a>
 				<div class="overlay">
 				<a class="info" href="Chitiet.php?idProduct=<?php echo $v['id_product'];?>" target="Blank"><?php echo $v['name_product']  ?></a>
 				</div>
@@ -58,26 +58,30 @@ function displayProduct($input,$category){
 				?>
 				<h2>Kính Nam</h2>
 				<?php
-				displayProduct($id,"KinhNam");
+				displayProduct("SELECT * FROM products WHERE id_category = 1");
 			}else if($id == 2){
 				?>
 				<h2>Kính Nữ</h2>
 				<?php
-				displayProduct($id,"KinhNu");
+				displayProduct("SELECT * FROM products WHERE id_category = 2");
 			}else if($id == 3){
 				?>
 				<h2>Kính Trẻ Em</h2>
 				<?php
-				displayProduct($id,"KinhTreEm");
+				displayProduct("SELECT * FROM products WHERE id_category = 3");
 			}else{
 				?>
 				<h2>Lens</h2>
 				<?php
-				displayProduct($id,"lens");
+				displayProduct("SELECT * FROM products WHERE id_category = 4");
 			}
 			?>
 			</div>
 		</div>
 		</div>
 
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px">
 		<?php include("footer.php"); ?>
+		</div>
+
+		
